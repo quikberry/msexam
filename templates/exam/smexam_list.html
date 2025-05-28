@@ -2,26 +2,67 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Экзамены</title>
+    <title>Список экзаменов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f9f9f9;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .exam {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .exam img {
+            max-height: 200px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
     <h1>ФИО: {{ student_name }}</h1>
     <h2>Группа: {{ group }}</h2>
 
     <h3>Опубликованные экзамены:</h3>
+
     {% for exam in exams %}
-        <hr>
-        <p><strong>Название:</strong> {{ exam.title }}</p>
-        <p><strong>Дата создания:</strong> {{ exam.created_at }}</p>
-        <p><strong>Дата проведения:</strong> {{ exam.exam_date }}</p>
-        <p><strong>Пользователи:</strong>
-            {% for user in exam.students.all %}
-                {{ user.username }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        </p>
-        <p><strong>Изображение:</strong><br>
-            <img src="{{ exam.image.url }}" alt="image" style="max-height:200px;">
-        </p>
+        <div class="exam">
+            <p><span class="label">Название:</span> {{ exam.title }}</p>
+            <p><span class="label">Дата создания:</span> {{ exam.created_at }}</p>
+            <p><span class="label">Дата проведения:</span> {{ exam.exam_date }}</p>
+            <p><span class="label">Участники:</span>
+                {% for user in exam.students.all %}
+                    {{ user.username }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p><span class="label">Изображение:</span></p>
+            <img src="{{ exam.image.url }}" alt="exam image">
+        </div>
+    {% empty %}
+        <p>Нет опубликованных экзаменов.</p>
     {% endfor %}
 </body>
 </html>

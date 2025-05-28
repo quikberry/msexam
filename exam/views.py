@@ -6,5 +6,5 @@ def smexam_list(request):
     return render(request, 'exam/smexam_list.html', {
         'exams': exams,
         'student_name': 'Сергей Мовчан',
-        'group': 'УКАИбд-321',
+        'group': '241-672',
     })
